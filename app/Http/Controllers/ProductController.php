@@ -11,14 +11,14 @@ class ProductController extends Controller
     {
         // get all products
         $products = Products::all();
-        
+
         return view('products.products', ['products' => $products]);
     }
 
     public function product($id)
     {
         $product = Products::find($id);
-        
+
         return view('products.product', ['product' => $product]);
     }
 }

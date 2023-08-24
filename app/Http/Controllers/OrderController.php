@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\CartItems;
 use App\Models\Order;
 use App\Models\OrderItems;
 use Illuminate\Http\Request;
@@ -43,9 +42,10 @@ class OrderController extends Controller
     {
 
         $user_id = auth()->id();
-        
+
         $orders = Order::where('user_id', $user_id)->with('orderItems')->first();
-        
+
+
 
         //return view('cart.viewCart', ['cart' => $cart]);
         return view('order.show', ['orders' => $orders]);

@@ -45,12 +45,35 @@ class CartController extends Controller
 
     public function viewCart()
     {
-        
+
         $user_id = auth()->id();
-        
+
         $cart = Cart::where('user_id', $user_id)->with('cartItems')->first();
-        
+
 
         return view('cart.viewCart', ['cart' => $cart]);
+    }
+
+    public function destroy($cartItemId)
+    {
+        $item = CartItems::findOrFail($cartItemId)->delete();
+
+        return redirect()->back()->with('success', 'Item removed from cart.');
+
+    }
+
+    public function clear()
+    {
+        $user_id = auth()->id();
+
+        $cart = Cart::where('user_id', $user_id)->first();
+
+        if ($cart) {
+            $cart->cartItems()->delete();
+
+            return redirect()->back()->with('success', 'Cart cleared.');
+        }
+
+        return redirect()->back()->with('error', 'No cart found.');
     }
 }
