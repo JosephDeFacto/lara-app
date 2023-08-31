@@ -5,7 +5,7 @@
                 <a href="{{url('viewCart')}}">
                     <button @click="cartOpen = !cartOpen" class="text-gray-600 focus:outline-none mx-4 sm:mx-0">
                         <i class="fa fa-shopping-cart text-2xl text-blue-600 cart" aria-hidden="true"></i>
-                        <span lass="cart-count">{{ session('cartCount', 0)}}</span>
+                        <span class="cart-count">{{ session('cartCount', 0)}}</span>
                     </button>
                 </a>
             </div>
