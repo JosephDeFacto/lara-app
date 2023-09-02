@@ -5,7 +5,9 @@
             <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                 @foreach ($products as $product)
                     <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                        <div class="flex items-end justify-end h-56 w-full bg-cover" style="background-image: url('https://images.unsplash.com/photo-1563170351-be82bc888aa4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=376&q=80')">
+                        <a href="{{ url('product' , ['id' => $product->id ]) }}"><img src="{{ asset('/storage/images/'.$product->image) }}" class="w-full" style="height: 300px"></a>
+
+                        <div class="flex justify-end w-full bg-cover">
                             <form class="add-quantity-form">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
