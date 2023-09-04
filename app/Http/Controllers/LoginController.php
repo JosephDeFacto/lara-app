@@ -23,16 +23,13 @@ class LoginController extends Controller
 
     public function store(Request $request)
     {
-        if (!auth()->attempt(request(['email', 'password']))) {
-            return back()->withErrors([
-                'msg' => 'Wrong email or password, try again!'
-            ]);
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            $cartCount = $request->session()->get('cartCount', 0);
+            $request->session()->put('cartCount', $cartCount);
+            return redirect()->to('/');
         }
-
-        $cartCount = $request->session()->get('cartCount', 0);
-        $request->session()->put('cartCount', $cartCount);
-        $request->session()->flash('flash_notification.success', 'Welcome back!');
-        return redirect()->to('/');
+        return redirect()->back()->withInput($request->only('email'))->withErrors(['email' => ''])->withErrors(['password' => 'Wrong email or password!']);
     }
 
     public function logout(Request $request): RedirectResponse
