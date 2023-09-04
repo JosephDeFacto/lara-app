@@ -29,6 +29,9 @@
 
     <div class="mt-16">
         @if(isset($searchProducts))
+            <div class="w-full mx-auto p-2 rounded-md bg-amber-50">
+                <p class="text-slate-600">{{ count($searchProducts) > 1 ? count($searchProducts) . ' products found' : count($searchProducts) . ' product found' }}</p>
+            </div>
             <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                 @foreach ($searchProducts as $product)
                     <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
