@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SpecialOfferController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\LoginController;
@@ -63,3 +64,7 @@ Route::get('show', [OrderController::class, 'show']);
 
 // search
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+
+// special_offer
+Route::get('special_offer', [SpecialOfferController::class, 'index'])->name('special_offer');
