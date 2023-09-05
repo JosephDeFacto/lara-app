@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\FavoriteProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,9 @@ Route::post('cart/change-quantity', [CartController::class, 'changeQuantity'])->
 Route::get('account', [UserController::class, 'account'])->name('user.account');
 Route::get('account/update-password', [UserController::class, 'create']);
 Route::post('update-password', [UserController::class, 'store']);
+
+// favorites
+Route::get('favorites', [FavoriteProductsController::class, 'index'])->name('user.favorites');
 
 // checkout
 Route::get('checkout', [OrderController::class, 'checkout']);
