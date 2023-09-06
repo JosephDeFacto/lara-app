@@ -16,6 +16,7 @@ class OrderController extends Controller
         $user = auth()->id();
         $cart = Cart::where('user_id', $user)->with('cartItems.product')->first();
 
+
         if (!$user) {
             return redirect()->to('/login');
         }
@@ -33,6 +34,8 @@ class OrderController extends Controller
         }
 
         $cart->cartItems()->delete();
+        /*session()->forget('cart');
+        session()->flush();*/
 
         //return redirect()->route('order.show', $order->id)->with('success', 'Order placed successfully.');
         return redirect()->to('show');
@@ -40,10 +43,11 @@ class OrderController extends Controller
 
     public function show()
     {
-
         $user_id = auth()->id();
 
-        $orders = Order::where('user_id', $user_id)->with('orderItems')->first();
+        $orders = Order::where('user_id', $user_id)->with('orderItems')->get();
+
+        session()->forget('cartCount');
 
 
 
