@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('products')) {
-
-            Schema::table('products', function (Blueprint $table) {
-                $table->boolean('is_special_offer')->default(false);
-            });
-        }
+        Schema::table('products', function (Blueprint $table) {
+            $table->unsignedBigInteger('price')->after('description');
+        });
     }
 
     /**
@@ -25,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            //
+            $table->dropColumn('price');
         });
     }
 };
