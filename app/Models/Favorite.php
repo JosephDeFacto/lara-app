@@ -9,4 +9,17 @@ class Favorite extends Model
 {
     use HasFactory;
 
+    protected $fillable = ["user_id", "product_id"];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function products()
+    {
+        return $this->belongsTo(Products::class, 'product_id');
+    }
+
+
 }
