@@ -1,8 +1,6 @@
 @extends('welcome')
 @section('content')
-
     <div class="container mx-auto px-4 py-8">
-
         <div class="mt-8">
             @if(isset($cart->cartItems) && count($cart->cartItems) > 0)
                 <div class="flex flex-col md:flex-row md:justify-between md:items-center">
@@ -30,8 +28,6 @@
                                         <span class="quantity mr-2 text-gray-600">{{ $cartItem->quantity }}</span>
                                         <small class="error"></small>
                                         <button type="button" class="change-quantity-btn bg-gray-200 rounded-l-lg px-2 py-1" data-action="increment">+</button>
-                                        {{--<input type="number" name="quantity" value="{{ $cartItem->quantity }}" min="1" max="10">--}}
-                                        {{--<input type="submit" value="submit">--}}
                                         <span class="price ml-auto font-bold">${{ $cartItem->product->price }}</span>
                                     </form>
                                 </div>
