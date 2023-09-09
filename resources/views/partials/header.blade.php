@@ -18,6 +18,8 @@
                 @if(\Illuminate\Support\Facades\Auth::user())
                     <a class="ml-auto mr-1 text-black-900 hover:underline sm:mx-3 sm:mt-0 float-right" href="{{ url('logout') }}">Logout</a>
                     <a class="ml-auto mr-1 text-black-900 hover:underline sm:mx-3 sm:mt-0 float-right" href="{{ route('user.account') }}"><i class="fa fa-user text-xl" aria-hidden="true" title="Account"></i></a>
+                    <a class="ml-auto mr-1 text-black-900 hover:underline sm:mx-3 sm:mt-0 float-right" href="{{ route('user.favorites') }}"><i class="fa fa-heart text-xl" style="color: #e26571;" aria-hidden="true" title="Favorite products"></i></a>
+
                 @else
                     <a class="ml-auto mr-1 text-black-900 hover:underline sm:mx-3 sm:mt-0 float-right" href="{{ url('login') }}">Sign-in</a>
                 @endif
