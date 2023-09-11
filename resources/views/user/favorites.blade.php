@@ -1,5 +1,7 @@
-@if(isset($products))
-    @foreach($products->favorites as $product)
-        {{ $product->name }}
-    @endforeach
-@endif
+@extends('welcome')
+@section('content')
+@foreach($favoriteProducts as $favorites)
+    {{ $favorites->products->name }}
+    {{ $favorites->products->description }}
+@endforeach
+@endsection
