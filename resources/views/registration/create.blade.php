@@ -48,7 +48,6 @@
         </div>
     </section>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
 
         $('.error-msg').delay(1000).fadeOut(1000);
