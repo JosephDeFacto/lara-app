@@ -13,12 +13,8 @@ return new class extends Migration
     {
         if (!Schema::hasTable('favorites')) {
 
-            Schema::create('favorites', function (Blueprint $table) {
-                $table->id();
-                $table->unsignedBigInteger('user_id');
-                $table->unsignedBigInteger('product_id');
-                $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-                $table->timestamps();
+            Schema::table('favorites', function (Blueprint $table) {
+                $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->after('user_id');
             });
         }
     }
@@ -28,6 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('favorites');
+        Schema::table('favorites', function (Blueprint $table) {
+            //
+        });
     }
 };
