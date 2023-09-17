@@ -23,7 +23,6 @@ class FavoriteProductsController extends Controller
 
     public function store(Request $request)
     {
-
         $user_id = Auth::id();
         $product_id = $request->input('product_id');
 
@@ -33,5 +32,14 @@ class FavoriteProductsController extends Controller
         ]);
 
         return redirect()->route('home');
+    }
+
+    public function remove($id)
+    {
+
+        $remove = Favorite::findOrFail($id);
+        $remove->delete();
+
+        return redirect()->to('user.favorites');
     }
 }
