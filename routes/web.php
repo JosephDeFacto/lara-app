@@ -62,6 +62,7 @@ Route::post('update-password', [UserController::class, 'store']);
 // favorites
 Route::get('favorites', [FavoriteProductsController::class, 'index'])->name('user.favorites');
 Route::post('/toWishlist', [FavoriteProductsController::class, 'store'])->name('toWishlist');
+Route::get('favorites/remove/{id}', [FavoriteProductsController::class, 'remove'])->name('remove');
 
 // checkout
 Route::get('checkout', [OrderController::class, 'checkout']);
@@ -72,3 +73,6 @@ Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 // special_offer
 Route::get('special_offer', [SpecialOfferController::class, 'index'])->name('special_offer');
+
+
+Route::get('api', [\App\Http\Controllers\ProductsApiController::class, 'index']);
