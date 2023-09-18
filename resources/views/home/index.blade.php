@@ -20,11 +20,42 @@
                     </div>
                 @endforeach
 
+                <div class="flex items-center justify-center p-4">
+                    <button id="dropdownDefault" data-dropdown-toggle="dropdown"
+                            class="bg-blue-600 text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                            type="button">
+                        Filter by category
+                        <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown menu -->
+                    <form class="form-filter">
+                        <div id="dropdown" class="z-10 hidden w-56 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
+                            <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">
+                                Category
+                            </h6>
+                            <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+                                <li class="flex items-center">
+                                    <input id="category_{{$category->id}}" type="checkbox" name="category" value="{{ $category->id }}" data-category-type="{{ $category->name }}"
+                                           class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+
+                                    <label for="apple" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                                        {{ $category->name }}
+                                    </label>
+                                </li>
+                                <button id="submitID" value="submit">Filter</button>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="mt-16">
                     <h3 class="text-gray-600 text-2xl font-medium">Buy now</h3>
 
-
-                    <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
+                    <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6 filtered">
                         @foreach($randomProducts as $products)
                             <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
                                 <div class="flex items-end justify-end h-56 w-full bg-cover" style="background-image: url('https://images.unsplash.com/photo-1563170351-be82bc888aa4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=376&q=80')">
@@ -91,6 +122,32 @@
                 })
 
             });
+
+            $('form.form-filter').submit(function(event) {
+                event.preventDefault();
+                let category = $('input[type=checkbox][data-category-type]:checked').map(function() {
+                    return $(this).val()
+                }).get();
+                console.log(category);
+                let filtered = $('.filtered');
+                console.log(filtered);
+
+                $.ajax({
+                    url: "{{ url('filter') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        category: category,
+                    },
+
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function (request, status, error) {
+                        alert(error);
+                    }
+                })
+            })
         });
 
         $('.on-hover-red').hover(function() {

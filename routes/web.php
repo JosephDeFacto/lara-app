@@ -11,6 +11,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FavoriteProductsController;
+use App\Http\Controllers\FilterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,3 +77,6 @@ Route::get('special_offer', [SpecialOfferController::class, 'index'])->name('spe
 
 
 Route::get('api', [\App\Http\Controllers\ProductsApiController::class, 'index']);
+
+// filter
+Route::get('filter', [FilterController::class, 'filter']);
