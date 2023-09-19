@@ -52,6 +52,7 @@
                 var action = $(this).data('action');
                 var cartCount = $('.cart-count');
                 var price = {{ isset($cartItem) ? $cartItem->product->price : 0 }};
+                var priceElement = form.find('.price');
                 $.ajax({
                     type: 'POST',
                     url: '{{ route('cart.changeQuantity') }}',
@@ -63,8 +64,9 @@
                     success: function (response) {
                         console.log(response);
                         let quantityElement = form.find('.quantity');
+                        console.log(quantityElement);
                         quantityElement.text(response.quantity);
-                        $('.price').text("$"+(response.quantity * price).toFixed(2));
+                        priceElement.text("$"+(response.quantity * price).toFixed(2));
                         if (response.quantity < 1) {
                             $('.error').text('Quantity of minimum 1 is required');
                             $("button[data-action=\"decrement\"]").prop('disabled', true);
