@@ -11,11 +11,9 @@ class FilterController extends Controller
 
     public function filter(Request $request)
     {
-
         $selectedCategories = $request->input('category');
 
         $filteredProducts = Products::where('category_id', $selectedCategories)->get();
-
 
         return response()->json($filteredProducts);
     }
