@@ -12,22 +12,14 @@ class FilterController extends Controller
     public function filter(Request $request)
     {
 
-        /*$selectedCategories = $request->input('category');
-        $price = $request->input('price');
-
-
-        $byPriceDESC = Products::orderBy('price', 'asc')->get();
-        $byPriceASC = Products::orderBy('price', 'desc')->get();
-
-        $filteredProducts = Products::where('category_id', $selectedCategories)->get();
-
-        return response()->json(['filteredProducts' =>$filteredProducts, 'byPriceDESC' => $byPriceDESC, 'byPriceASC' => $byPriceASC]);*/
         $byPriceASC = null;
         $byPriceDESC = null;
         $selectedCategories = $request->input('category');
         $price = $request->input('price');
+        $brand = $request->input('brand');
 
         $filteredProducts = Products::where('category_id', $selectedCategories)->get();
+        $byBrand = Products::where('brand_id', $brand)->get();
 
         if ($price === 'asc') {
             $byPriceASC = Products::orderBy('price', 'asc')->get();
@@ -35,6 +27,6 @@ class FilterController extends Controller
             $byPriceDESC = Products::orderBy('price', 'desc')->get();
         }
 
-        return response()->json(['filteredProducts' => $filteredProducts, 'byPriceDESC' => $byPriceDESC, 'byPriceASC' => $byPriceASC]);
+        return response()->json(['filteredProducts' => $filteredProducts, 'byBrand' => $byBrand, 'byPriceDESC' => $byPriceDESC, 'byPriceASC' => $byPriceASC]);
     }
 }

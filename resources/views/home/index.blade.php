@@ -29,7 +29,7 @@
                             </svg>
                         </button>
                         <!-- category filter -->
-                        <form class="form-category-filter">
+                        <form class="form-category-filter form-brand-filter">
                             <div id="dropdown" class="z-10 hidden w-56 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
                                 <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">Category</h6>
                                 <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
@@ -43,8 +43,24 @@
                                             </label>
                                         </li>
                                     @endforeach
+
+                                </ul>
+                                <!-- brand filter-->
+                                <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">Brand</h6>
+                                <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+                                    @foreach($brands as $brand)
+                                        <li class="flex items-center">
+                                            <input id="brand_{{$brand->id}}" type="checkbox" name="brand" value="{{ $brand->id }}" data-brand-type="{{ $brand->name }}"
+                                                   class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+
+                                            <label for="brand_{{$brand->id}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                {{ $brand->name }}
+                                            </label>
+                                        </li>
+                                    @endforeach
                                     <button id="submitID" value="submit">Filter</button>
                                 </ul>
+
                             </div>
                         </form>
                     </div>
@@ -77,7 +93,6 @@
                                             desc
                                         </label>
                                     </li>
-                                   {{-- <button id="submitID" value="submit">Filter</button>--}}
                                 </ul>
                             </div>
                         </form>
@@ -152,8 +167,7 @@
         });
 
         let filterByCategory = () => {
-
-            $('form.form-category-filter').submit(function(event) {
+            $('form.form-category-filter').change(function(event) {
                 event.preventDefault();
                 let category = $('input[type=checkbox][data-category-type]:checked').map(function() {
                     return $(this).val()
@@ -207,6 +221,56 @@
                 })
             });
 
+        }
+
+        let filterByBrand = () => {
+            $('.form.form-brand-filter').change(function (event) {
+                event.preventDefault();
+                let brand = $('input[type=checkbox][data-brand-type]:checked').val();
+
+                $.ajax({
+                    url: "{{ url('filter') }}",
+                    method: 'GET',
+                    dataType: 'json',
+                    data: {
+                        brand: brand,
+                    },
+                    success: function (response) {
+                        let productsContainer = $('#products-container');
+                        productsContainer.html("");
+                        response.byBrand.forEach(function (product) {
+                            let filterElement = `
+                                <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
+                                    <div class="flex items-end justify-end h-56 w-full bg-cover" style="background-image: url('https://images.unsplash.com/photo-1563170351-be82bc888aa4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=376&q=80')">
+                                        <form class="add-quantity-form">
+                                            @csrf
+                            <input type="hidden" name="product_id" value="${product.id}">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <button class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                                                <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                            </button>
+                                        </form>
+
+                                        <form action="{{ route('toWishlist') }}" method="POST" class="flex w-full ml-64">
+                                            @csrf
+                            <input type="hidden" name="product_id" value="${product.id}">
+                                            <button type="submit"><i class="fa fa-heart text-xl on-hover-red"></i></button>
+                                        </form>
+                                    </div>
+
+                                    <div class="px-5 py-3">
+                                        <h3 class="text-gray-700 uppercase">${product.name}</h3>
+                                        <span class="text-gray-500 mt-2">${product.price}€</span>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+                            productsContainer.append(filterElement);
+                        })
+                    }
+                })
+
+            });
         }
 
         let sortByPrice = () => {
@@ -302,6 +366,8 @@
         sortByPrice();
 
         filterByCategory();
+
+        filterByBrand();
 
 
         $('.on-hover-red').hover(function() {
