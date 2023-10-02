@@ -62,10 +62,10 @@
         $(document).ready(function() {
             $('.add-quantity-form').on('click', function(event) {
                 event.preventDefault();
-                var form = $(this).closest('.add-quantity-form');
-                var product_id = form.find('input[name="product_id"]').val();
-                var quantity = form.find('input[name="quantity"]').val();
-                var cartCount = $('.cart-count');
+                let form = $(this).closest('.add-quantity-form');
+                let product_id = form.find('input[name="product_id"]').val();
+                let quantity = form.find('input[name="quantity"]').val();
+                let cartCount = $('.cart-count');
                 console.log(cartCount);
                 $.ajax({
                     type: 'POST',

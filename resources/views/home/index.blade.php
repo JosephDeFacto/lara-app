@@ -138,10 +138,10 @@
 
             $('.add-quantity-form').on('click', function(event) {
                 event.preventDefault();
-                var form = $(this).closest('.add-quantity-form');
-                var product_id = form.find('input[name="product_id"]').val();
-                var quantity = form.find('input[name="quantity"]').val();
-                var cartCount = $('.cart-count');
+                let form = $(this).closest('.add-quantity-form');
+                let product_id = form.find('input[name="product_id"]').val();
+                let quantity = form.find('input[name="quantity"]').val();
+                let cartCount = $('.cart-count');
 
                 $.ajax({
                     type: 'POST',
@@ -194,30 +194,34 @@
                     }
                 })
             });
-
         }
 
         let filterByBrand = () => {
             $('.form.form-brand-filter').change(function (event) {
                 event.preventDefault();
-                let brand = $('input[type=checkbox][data-brand-type]:checked').val();
+                let brand = $('input[type=checkbox][data-brand-type]:checked').map(function () {
+                    return $(this).val();
+                }).get();
 
                 $.ajax({
                     url: "{{ url('filter') }}",
-                    method: 'GET',
+                    type: 'GET',
                     dataType: 'json',
                     data: {
                         brand: brand,
                     },
                     success: function (response) {
+                        console.log(response);
                         let productsContainer = $('#products-container');
                         productsContainer.html("");
                         response.byBrand.forEach(function (product) {
                             productsContainer.append(generateElement(product));
                         })
+                    },
+                    error: function (request, status, error) {
+                        alert(error);
                     }
                 })
-
             });
         }
 

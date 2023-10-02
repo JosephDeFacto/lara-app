@@ -47,12 +47,12 @@
     <script>
         $(document).ready(function() {
             $('.change-quantity-btn').on('click', function() {
-                var form = $(this).closest('.change-quantity-form');
-                var product_id = form.find('input[name="product_id"]').val();
-                var action = $(this).data('action');
-                var cartCount = $('.cart-count');
-                var price = {{ isset($cartItem) ? $cartItem->product->price : 0 }};
-                var priceElement = form.find('.price');
+                let form = $(this).closest('.change-quantity-form');
+                let product_id = form.find('input[name="product_id"]').val();
+                let action = $(this).data('action');
+                let cartCount = $('.cart-count');
+                let price = {{ isset($cartItem) ? $cartItem->product->price : 0 }};
+                let priceElement = form.find('.price');
                 $.ajax({
                     type: 'POST',
                     url: '{{ route('cart.changeQuantity') }}',
